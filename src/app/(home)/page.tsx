@@ -55,7 +55,7 @@ export default function Home() {
 
         <section className="py-28 flex flex-col items-center px-6">
           <h2 className="text-4xl text-slate-700 font-medium text-center mb-10">Innovatsion matematika kitobi kimlar uchun: </h2>
-          <ul className="flex flex-col max-w-2xl gap-4 list-disc pl-16">
+          <ul className="flex flex-col max-w-3xl gap-4 list-disc pl-16">
             <li className="text-2xl text-slate-600 font-medium leading-relaxed relative">
               <span className="block max-w-24 w-full h-3 rounded-md bg-yellow-300 absolute left-2 bottom-0.5 z-0" />
               <span className="relative z-10">
@@ -69,7 +69,7 @@ export default function Home() {
               Milliy sertifikat uchun talabgorlar
             </li>
             <li className="text-2xl text-slate-600 font-medium leading-relaxed relative">
-              <span className="block max-w-32 w-full h-3 rounded-md bg-red-400 absolute right-6 bottom-0.5 z-0" />
+              <span className="block max-w-32 w-full h-3 rounded-md bg-red-400 absolute left-16 bottom-0.5 z-0" />
               <span className="relative z-10">
                 Attestatsiyaga tayyorlayotgan va o’z bilimini oshirib ko’proq daromad qilishni istaydigan o’qituvchilar uchun
               </span>
