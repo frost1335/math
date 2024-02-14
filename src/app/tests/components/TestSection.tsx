@@ -68,7 +68,7 @@ ${answers.map((question, index) => (
                 `
 
                 // Send the message to the Telegram bot
-                const data = await sendMessage(chatId, message);
+                await sendMessage(chatId, message);
             }
             catch (err) {
                 console.log(err);
@@ -184,10 +184,6 @@ const TestForm = ({ finishTest, setQuestions, questions }: { finishTest: () => v
         else {
             setError('Iltimos variantlardan birini tanlang!')
         }
-    }
-
-    window.onbeforeunload = function () {
-        return "Siz sahifani yangilamoqchimisiz? O'zgarishlar saqlanmaydi!";
     }
 
     return (
