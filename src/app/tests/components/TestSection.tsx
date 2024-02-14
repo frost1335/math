@@ -37,7 +37,6 @@ export default function TestSection() {
     }
 
     const onSubmit = async (e) => {
-        console.log('s');
         e.preventDefault()
 
         if (formValidation()) {
@@ -131,7 +130,6 @@ const TestForm = ({ finishTest }: { finishTest: () => void }) => {
     useLayoutEffect(() => {
         const interval = setInterval(() => {
             setTimeLeft((time) => {
-                console.log(time);
                 if (time === 0) {
                     clearInterval(interval)
                     finishTest()
@@ -165,8 +163,6 @@ const TestForm = ({ finishTest }: { finishTest: () => void }) => {
             setError('Iltimos variantlardan birini tanlang!')
         }
     }
-
-    console.log(questions);
 
     window.onbeforeunload = function () {
         return "Siz sahifani yangilamoqchimisiz? O'zgarishlar saqlanmaydi!";

@@ -13,7 +13,6 @@ export default function Navbar() {
     useEffect(() => {
         if (searchParams.get('about')) {
             document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' })
-            console.log('about');
         }
 
         if (searchParams.get('authors')) {
