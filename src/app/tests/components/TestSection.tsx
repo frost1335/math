@@ -6,6 +6,7 @@ import { testQuestions, testTime } from "@/constants";
 import { useLayoutEffect, useState } from "react"
 import { MdOutlineTimer } from "react-icons/md"
 import { useRouter } from "next/navigation";
+import { sendMessage } from "@/app/actions";
 
 const phoneStringLength = 18
 
@@ -23,6 +24,8 @@ function formatTime(seconds: number): string {
 
 export default function TestSection() {
     const router = useRouter()
+    const [questions, setQuestions] = useState(testQuestions)
+
     const [name, setName] = useState<string | null>('')
     const [phone, setPhone] = useState<string | null>('+998')
     const [error, setError] = useState('')
@@ -40,18 +43,37 @@ export default function TestSection() {
         e.preventDefault()
 
         if (formValidation()) {
-            const formData = {
-                name, phone
+            const answers = questions.map((q) => ({
+                title: q.title,
+                answer: q.answer
+            }))
+
+            try {
+                const chatId = process.env.NEXT_PUBLIC_CHAT_ID
+
+                // message to inform user test results
+                const message = `
+<b>Foydalanuvchidan Ariza!</b>
+
+Foydalanuvchi Ismi:  <u>${name}</u>
+Foydalanuvchi Tel. raqami:  <u>${phone}</u>
+
+<b>Test javoblari:</b>
+
+${answers.map((question, index) => (
+                    `${index + 1}-Savol:${question.title} 
+    Tanlangan javob: <u>${question.answer}</u>;`
+                )).join('\n\n')
+                    }
+                `
+
+                // Send the message to the Telegram bot
+                const data = await sendMessage(chatId, message);
+            }
+            catch (err) {
+                console.log(err);
             }
 
-            // const data = await fetch(`/post/test/results`, {
-            //     headers: {
-            //         'Content-Type': 'application/json'
-            //     },
-            //     body: JSON.stringify(formData)
-            // }).then(res => res.json())
-
-            console.log(formData);
             router.push('/thanks')
         }
         else {
@@ -98,7 +120,7 @@ export default function TestSection() {
                     </div >
                 ) : (
                     started ? (
-                        <TestForm finishTest={finishTest} />
+                        <TestForm questions={questions} setQuestions={setQuestions} finishTest={finishTest} />
                     ) : (
                         <div>
                             <h2 className="text-2xl md:text-3xl mb-10 text-center text-zinc-700 font-medium relative">
@@ -119,8 +141,7 @@ export default function TestSection() {
     )
 };
 
-const TestForm = ({ finishTest }: { finishTest: () => void }) => {
-    const [questions, setQuestions] = useState(testQuestions)
+const TestForm = ({ finishTest, setQuestions, questions }: { finishTest: () => void, setQuestions, questions }) => {
     const [timeLeft, setTimeLeft] = useState(testTime)
     const [progressWidth, setProgressWidth] = useState(100)
     const [selectedAnswer, setSelectedAnswer] = useState<number | null>(null)
@@ -149,10 +170,11 @@ const TestForm = ({ finishTest }: { finishTest: () => void }) => {
         if (selectedAnswer !== null) {
             setError('')
 
-            const newQuestions = testQuestions.map((q, i) => i === questionIndex ? { ...q, answer: selectedAnswer } : q)
+            const newQuestions = questions.map((q, i) => i === questionIndex ? { ...q, answer: q.variants[selectedAnswer] } : q)
 
             setSelectedAnswer(null)
             setQuestionIndex((index) => index + 1)
+            console.log(newQuestions);
             setQuestions([...newQuestions])
 
             if (questionIndex === 2) {
