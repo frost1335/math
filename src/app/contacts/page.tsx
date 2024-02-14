@@ -17,7 +17,7 @@ export default function Home() {
                             </span>
                         </li>
                         <li>
-                            <Link className="text-slate-700 font-medium" href={'/tests'}>Testlar</Link>
+                            <Link className="text-slate-700 font-medium" href={'/tests'}>Aloqa uchun</Link>
                         </li>
                     </ul>
                 </div>
