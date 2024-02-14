@@ -5,7 +5,7 @@ import TestSection from "./components/TestSection";
 export default function page() {
     return (
         <main className="min-h-[70vh]">
-            <div className="px-6 my-14 container max-w-7xl m-auto">
+            <div className="px-4 md:px-6 my-8 md:my-14 container max-w-7xl m-auto">
                 <ul className="flex items-center gap-3">
                     <li>
                         <Link className="text-slate-700 font-medium" href={'/'}>Bosh sahifa</Link>
@@ -21,7 +21,7 @@ export default function page() {
                 </ul>
             </div>
 
-            <section className="container max-w-7xl m-auto px-8 mb-16 py-6 pb-20">
+            <section className="container max-w-7xl m-auto px-4 md:px-6 mb-16 py-6 pb-20">
                 <TestSection />
             </section>
         </main>
