@@ -61,7 +61,7 @@ Foydalanuvchi Tel. raqami:  <u>${phone}</u>
 <b>Test javoblari:</b>
 
 ${answers.map((question, index) => (
-                    `${index + 1}-Savol:${question.title} 
+                    `${index + 1}-Savol: ${question.title} 
     Tanlangan javob: <u>${question.answer}</u>;`
                 )).join('\n\n')
                     }

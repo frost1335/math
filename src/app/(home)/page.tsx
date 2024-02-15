@@ -1,4 +1,4 @@
-import { HeroImg1, HeroImg2, Teacher1, Teacher2 } from "@/assets";
+import { HeroImg1, HeroImg2, Teacher1, Teacher1Over, Teacher2, Teacher2Over } from "@/assets";
 import Button from "@/components/Button";
 import Image from "next/image";
 import Link from "next/link";
@@ -102,8 +102,9 @@ export default function Home() {
               </ul>
             </div>
             <div className="order-1 md:order-2">
-              <div className="flex items-center justify-center md:justify-start md:ml-6 mb-6">
+              <div className="relative flex items-center justify-center md:justify-start md:ml-6 mb-6">
                 <Image src={Teacher2} alt="teacher-icon" className="w-[230px] h-[300px] object-cover shadow-2xl" width={200} height={300} />
+                <Image src={Teacher2Over} alt="teacher-icon" className="absolute opacity-0 hover:opacity-100 top-0 left-0 z-10 w-[230px] h-[300px] object-cover shadow-2xl transition-all duration-300" width={200} height={300} />
               </div>
               <h3 className="text-3xl text-slate-100 font-medium mb-6 relative">
                 <span className="block max-w-24 w-full h-3 rounded-md bg-yellow-400 absolute left-16 bottom-0 z-0" />
@@ -132,8 +133,9 @@ export default function Home() {
         <div className="container max-w-7xl m-auto">
           <div className="grid grid-cols-1 md:grid-cols-2 items-center gap-10 lg:gap-0">
             <div>
-              <div className="flex items-center justify-center md:justify-start md:ml-6 mb-6">
+              <div className="relative flex items-center justify-center md:justify-start md:ml-6 mb-6">
                 <Image src={Teacher1} alt="teacher-icon" className="w-[230px] h-[300px] object-cover shadow-2xl" width={200} height={300} />
+                <Image src={Teacher1Over} alt="teacher-icon" className="absolute opacity-0 hover:opacity-100 top-0 left-0 z-10 w-[230px] h-[300px] object-cover shadow-2xl transition-all duration-300" width={200} height={300} />
               </div>
               <h3 className="text-3xl text-slate-700 font-medium mb-6 relative">
                 <span className="block max-w-24 w-full h-3 rounded-md bg-red-400 absolute left-16 bottom-0 z-0" />
