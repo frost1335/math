@@ -10,6 +10,20 @@ import { sendMessage } from "@/app/actions";
 
 const phoneStringLength = 18
 
+function getRandom(arr, n) {
+    var result = new Array(n),
+        len = arr.length,
+        taken = new Array(len);
+    if (n > len)
+        throw new RangeError("getRandom: more elements taken than available");
+    while (n--) {
+        var x = Math.floor(Math.random() * len);
+        result[n] = arr[x in taken ? taken[x] : x];
+        taken[x] = --len in taken ? taken[len] : len;
+    }
+    return result;
+}
+
 function formatTime(seconds: number): string {
     const hours = Math.floor(seconds / 3600);
     const minutes = Math.floor((seconds % 3600) / 60);
@@ -24,7 +38,7 @@ function formatTime(seconds: number): string {
 
 export default function TestSection() {
     const router = useRouter()
-    const [questions, setQuestions] = useState(testQuestions)
+    const [questions, setQuestions] = useState(() => getRandom(testQuestions, 3))
 
     const [name, setName] = useState<string | null>('')
     const [phone, setPhone] = useState<string | null>('+998')
@@ -45,7 +59,8 @@ export default function TestSection() {
         if (formValidation()) {
             const answers = questions.map((q) => ({
                 title: q.title,
-                answer: q.answer
+                answer: q.answer,
+                qstNum: q.qstNum
             }))
 
             try {
@@ -61,14 +76,17 @@ Foydalanuvchi Tel. raqami:  <u>${phone}</u>
 <b>Test javoblari:</b>
 
 ${answers.map((question, index) => (
-                    `${index + 1}-Savol: ${question.title} 
-    Tanlangan javob: <u>${question.answer}</u>;`
+                    `<b>${index + 1}-Savol (№${question.qstNum}):</b>  ${question.title} 
+
+    Tanlangan javob:  <u>${question.answer}</u>`
                 )).join('\n\n')
                     }
                 `
 
+                const cleanedMessage = message.replace(/<sup>(.*?)<\/sup>|<sub>(.*?)<\/sub>/g, '$1$2');
+
                 // Send the message to the Telegram bot
-                await sendMessage(chatId, message);
+                await sendMessage(chatId, cleanedMessage);
             }
             catch (err) {
                 console.log(err);
@@ -142,6 +160,8 @@ ${answers.map((question, index) => (
 };
 
 const TestForm = ({ finishTest, setQuestions, questions }: { finishTest: () => void, setQuestions, questions }) => {
+    const lastItem = questions.length - 1
+
     const [timeLeft, setTimeLeft] = useState(testTime)
     const [progressWidth, setProgressWidth] = useState(100)
     const [selectedAnswer, setSelectedAnswer] = useState<number | null>(null)
@@ -177,7 +197,7 @@ const TestForm = ({ finishTest, setQuestions, questions }: { finishTest: () => v
             console.log(newQuestions);
             setQuestions([...newQuestions])
 
-            if (questionIndex === 2) {
+            if (questionIndex === lastItem) {
                 finishTest()
             }
         }
@@ -190,13 +210,13 @@ const TestForm = ({ finishTest, setQuestions, questions }: { finishTest: () => v
         <div className="md:p-6 lg:p-10 w-full">
             <div className="text-left">
                 <h2 className="text-xl md:text-2xl mb-8 text-left text-zinc-700 font-medium font-sans">
-                    {questionIndex + 1}) {testQuestions[questionIndex].title}
+                    {questionIndex + 1}) <span dangerouslySetInnerHTML={{ __html: questions[questionIndex].title }}></span>
                 </h2>
                 <ul className="flex w-full flex-col pl-0 md:pl-8 mb-14 gap-4">
                     {
-                        testQuestions[questionIndex].variants.map((variant, index) => (
+                        questions[questionIndex].variants.map((variant, index) => (
                             <li onClick={() => setSelectedAnswer(index)} key={index}>
-                                <button className={`w-full text-left font-medium px-3    md:px-4 py-3 rounded-lg border border-dashed border-slate-400 hover:text-red-500 hover:shadow-lg transition-all font-sans ${selectedAnswer === index ? 'bg-red-500 text-white hover:text-white' : 'bg-white text-slate-600'}`}>{variant}</button>
+                                <button className={`w-full text-left font-medium px-3    md:px-4 py-3 rounded-lg border border-dashed border-slate-400 hover:text-red-500 hover:shadow-lg transition-all font-sans ${selectedAnswer === index ? 'bg-red-500 text-white hover:text-white' : 'bg-white text-slate-600'}`} dangerouslySetInnerHTML={{ __html: variant }}></button>
                             </li>
                         ))
                     }
@@ -218,7 +238,7 @@ const TestForm = ({ finishTest, setQuestions, questions }: { finishTest: () => v
                     <div className="flex items-center">
                         <p className="font-medium text-orange-500 mr-3">{error}</p>
                         <Button disabled={selectedAnswer === null} onClick={onNext} status="secondary">
-                            {questionIndex === 2 ? 'Natijalarni ko`rish' : 'Keyingisi'}
+                            {questionIndex === lastItem ? 'Natijalarni ko`rish' : 'Keyingisi'}
                         </Button>
                     </div>
                 </div>
