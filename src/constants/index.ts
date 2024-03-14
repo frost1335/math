@@ -1,6 +1,6 @@
-export const TELEGRAM_LINK = '/'
-export const INSTAGRAM_LINK = '/'
-export const MAIL_LINK = '/'
+export const TELEGRAM_LINK = 'https://t.me/htppoinnomath'
+export const INSTAGRAM_LINK = 'https://www.instagram.com/innovatsion_matematika/'
+export const PHONE_LINK = '+998949434672'
 
 export const testTime = 10 * 60 //test time in mins and seconds
 
