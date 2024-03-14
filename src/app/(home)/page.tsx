@@ -15,6 +15,7 @@ import { sendMessage } from "@/app/actions";
 import ReactInputMask from "react-input-mask"
 import { MdCheck } from "react-icons/md";
 import { useState } from "react"
+import Contacts from "@/components/Contacts";
 
 const phoneStringLength = 18
 
@@ -232,8 +233,8 @@ Foydalanuvchi Tel. raqami:  <u>${phone}</u>
                 </div>
         ) : (
       <div className="flex flex-col items-center">
-          <h2 className="text-white text-center font-semibold text-2xl md:text-3xl mb-16">Kitob xaqida batafsil ma&apos;lumot olish uchun Ism va Telefon raqamingiz qoldiring!</h2>
-          <form onSubmit={onSubmit} className="flex flex-col max-w-3xl w-full px-28 p-10 bg-white rounded-xl">
+          <h2 className="text-white text-center font-semibold text-2xl md:text-3xl mb-16">Kitob xaqida batafsil ma&apos;lumot olish uchun Ism va Telefon raqamingizni qoldiring!</h2>
+          <form onSubmit={onSubmit} className="flex flex-col max-w-3xl w-full sm:px-28 px-14 p-10 bg-white rounded-xl">
                                 <div className="flex flex-col items-start mb-3 md:mb-5">
                                     <label htmlFor="name" className="font-sans text-lg text-slate-600 mb-2">Ism & Familiya <span className="text-red-600">*</span></label>
                                     <input value={name || ''} onChange={(e) => setName(e.target.value)} className="w-full px-4 py-3 border-2 border-slate-300 rounded-md font-medium text-zinc-700 placeholder:text-slate-500 font-sans" type="text" id="name" placeholder="Ism & Familiya" />
@@ -261,6 +262,10 @@ Foydalanuvchi Tel. raqami:  <u>${phone}</u>
         </div>
         )}
         </main>
+
+      <main id="contacts">
+                <Contacts />
+            </main>
     </div>
   );
 }
