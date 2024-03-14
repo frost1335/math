@@ -22,7 +22,7 @@ export default function Home() {
             <a className="text-2xl text-white p-2 hover:text-yellow-400 transition-all" target="_blank" href={INSTAGRAM_LINK}>
               <RiInstagramFill />
             </a>
-            <a className="text-2xl text-white p-2 hover:text-yellow-400 transition-all" target="_blank" href={PHONE_LINK}>
+            <a className="text-2xl text-white p-2 hover:text-yellow-400 transition-all" href={PHONE_LINK}>
               <FaPhone />
             </a>
           </div>
