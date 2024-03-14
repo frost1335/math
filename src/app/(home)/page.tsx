@@ -13,6 +13,7 @@ import { MdMail } from "react-icons/md";
 import { useRouter } from "next/navigation";
 import { sendMessage } from "@/app/actions";
 import ReactInputMask from "react-input-mask"
+import { MdCheck } from "react-icons/md";
 import { useState } from "react"
 
 const phoneStringLength = 18
@@ -20,6 +21,7 @@ const phoneStringLength = 18
 export default function Home() {
   const router = useRouter()
   const [name, setName] = useState<string | null>('')
+  const [done, setDone] = useState<boolean | null>(false)
   const [phone, setPhone] = useState<string | null>('+998')
   const [error, setError] = useState('')
   
@@ -48,7 +50,7 @@ Foydalanuvchi Tel. raqami:  <u>${phone}</u>
                 console.log(err);
             }
 
-            router.push('/thanks')
+            setDone(true)
         }
         else {
             setError('Iltimos Ism familyangizni yoki Tel. raqamingizni to`g`ri kiriting!')
@@ -219,10 +221,19 @@ Foydalanuvchi Tel. raqami:  <u>${phone}</u>
         </div>
       </main>
 
-      <main className="py-16 md:py-24 px-4 md:px-6">
+      <main className="py-16 md:py-24 px-4 bg-red-600 md:px-6">
+      
+        {done ? (
+      <div className="container max-w-7xl m-auto flex flex-col items-center py-16 md:py-24">
+                    <span className="mb-10 text-5xl text-white p-8 bg-emerald-500 rounded-full flex items-center justify-center shadow-2xl shadow-emerald-400/60">
+                        <MdCheck />
+                    </span>
+                    <h2 className="max-w-lg text-center text-2xl text-white">Rahmat, tez orada menjerlarimiz aloqaga chiqib batafsil ma’lumot berishadi.</h2>
+                </div>
+        ) : (
       <div className="flex flex-col items-center">
-          <h2 className="text-zinc-700 text-center font-semibold text-2xl md:text-3xl mb-10">Kitob xaqida batafsil ma&apos;lumot olish uchun Ism va Telefon raqamingiz qoldiring!</h2>
-              <form onSubmit={onSubmit} className="flex flex-col max-w-sm w-full">
+          <h2 className="text-white text-center font-semibold text-2xl md:text-3xl mb-10">Kitob xaqida batafsil ma&apos;lumot olish uchun Ism va Telefon raqamingiz qoldiring!</h2>
+          <form onSubmit={onSubmit} className="flex flex-col max-w-sm w-full px-6 p-4 bg-white rounded-md">
                                 <div className="flex flex-col items-start mb-3 md:mb-5">
                                     <label htmlFor="name" className="font-sans text-lg text-slate-600 mb-2">Ism & Familiya <span className="text-red-600">*</span></label>
                                     <input value={name || ''} onChange={(e) => setName(e.target.value)} className="w-full px-4 py-3 border-2 border-slate-300 rounded-md font-medium text-zinc-700 placeholder:text-slate-500 font-sans" type="text" id="name" placeholder="Ism & Familiya" />
@@ -241,13 +252,14 @@ Foydalanuvchi Tel. raqami:  <u>${phone}</u>
                                     />
                                 </div>
                                 <div className="flex flex-col items-center justify-center mt-8">
-                                    <Button disabled={!formValidation()} type="submit" status="secondary">
+                                    <Button disabled={!formValidation()} type="submit">
                                         Jo`natish
                                     </Button>
                                     <p className="font-medium text-center text-orange-500 mt-3">{error}</p>
                                 </div>
-                            </form>
-          </div>
+                    </form>
+        </div>
+        )}
         </main>
     </div>
   );
