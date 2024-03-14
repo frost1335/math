@@ -247,6 +247,7 @@ Foydalanuvchi Tel. raqami:  <u>${phone}</u>
                                 </div>
                             </form>
           </div>
+        </main>
     </div>
   );
 }
