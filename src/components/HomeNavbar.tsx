@@ -76,7 +76,7 @@ export default function Navbar() {
                             </Link>
                         </li>
                         <li>
-                            <Link className={`text-white text-lg pb-1.5 transition-all ${pathname === '/contacts' ? 'border-b-2 border-dashed border-b-yellow-500' : 'hover:text-yellow-500'}`} href="/contacts">
+                            <Link onClick={() => document.getElementById('contacts')?.scrollIntoView({ behavior: 'smooth' })} className={`text-white text-lg pb-1.5 transition-all ${pathname === '/contacts' ? 'border-b-2 border-dashed border-b-yellow-500' : 'hover:text-yellow-500'}`} href={{ pathname: '/', query: { contacts: true } }}>
                                 Aloqa uchun
                             </Link>
                         </li>
