@@ -1,3 +1,4 @@
+"use client"
 import { HeroImg1, HeroImg2, Teacher1, Teacher1Over, Teacher2, Teacher2Over } from "@/assets";
 import Button from "@/components/Button";
 import Image from "next/image";
