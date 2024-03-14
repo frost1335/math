@@ -13,7 +13,7 @@ export default function Contacts() {
                     Biz bilan bo’glaning:
                 </span>
             </h2>
-            <ul className="grid lg:grid-cols-4 xl:gap-6 gap-4 gap-y-8 sm:grid-cols-2 mt-6">
+            <ul className="grid lg:grid-cols-4 xl:gap-6 gap-4 gap-y-8 justify-center sm:grid-cols-2 mt-6">
                 <li>
                     <a target="_blank" href={TELEGRAM_LINK} className="flex flex-col items-center text-slate-600 hover:text-red-600 transition-all">
                         <span className="mb-4 text-2xl md:text-4xl w-16 h-16 md:w-20 md:h-20 flex items-center justify-center rounded-full border-2 border-zinc-700 text-zinc-700 shadow-lg hover:text-white hover:bg-red-600 hover:border-red-600 hover:shadow-xl transition-all">
