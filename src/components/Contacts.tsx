@@ -19,7 +19,7 @@ export default function Contacts() {
                         <span className="mb-4 text-2xl md:text-4xl w-16 h-16 md:w-20 md:h-20 flex items-center justify-center rounded-full border-2 border-zinc-700 text-zinc-700 shadow-lg hover:text-white hover:bg-red-600 hover:border-red-600 hover:shadow-xl transition-all">
                             <BsTelegram />
                         </span>
-                        <p className="font-medium font-mono">@innovationmatkematika</p>
+                        <p className="font-medium font-mono">@htppoinnomath</p>
                     </a>
                 </li>
                 <li>
@@ -27,7 +27,7 @@ export default function Contacts() {
                         <span className="mb-4 text-2xl md:text-4xl w-16 h-16 md:w-20 md:h-20 flex items-center justify-center rounded-full border-2 border-zinc-700 text-zinc-700 shadow-lg hover:text-white hover:bg-red-600 hover:border-red-600 hover:shadow-xl transition-all">
                             <RiInstagramFill />
                         </span>
-                        <p className="font-medium font-mono">#innovationmatkematika</p>
+                        <p className="font-medium font-mono">#innovatsion_matematika</p>
                     </a>
                 </li>
                 <li>
@@ -35,7 +35,7 @@ export default function Contacts() {
                         <span className="mb-4 text-2xl md:text-4xl w-16 h-16 md:w-20 md:h-20 flex items-center justify-center rounded-full border-2 border-zinc-700 text-zinc-700 shadow-lg hover:text-white hover:bg-red-600 hover:border-red-600 hover:shadow-xl transition-all">
                             <FaPhone />
                         </span>
-                        <p className="font-medium font-mono">+998 93 189 73 18</p>
+                        <p className="font-medium font-mono">+998 94 943 46 72</p>
                     </a>
                 </li>
             </ul>
