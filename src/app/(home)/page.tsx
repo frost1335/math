@@ -3,10 +3,11 @@ import Button from "@/components/Button";
 import Image from "next/image";
 import Link from "next/link";
 import { TbMathFunction } from "react-icons/tb";
+import { FaPhone } from "react-icons/fa6";
 import ScrollButton from "./ScrollButton";
 import { BsTelegram } from "react-icons/bs";
 import { RiInstagramFill } from "react-icons/ri";
-import { INSTAGRAM_LINK, MAIL_LINK, TELEGRAM_LINK } from "@/constants";
+import { INSTAGRAM_LINK, PHONE_LINK, TELEGRAM_LINK } from "@/constants";
 import { MdMail } from "react-icons/md";
 
 export default function Home() {
@@ -21,8 +22,8 @@ export default function Home() {
             <a className="text-2xl text-white p-2 hover:text-yellow-400 transition-all" target="_blank" href={INSTAGRAM_LINK}>
               <RiInstagramFill />
             </a>
-            <a className="text-2xl text-white p-2 hover:text-yellow-400 transition-all" target="_blank" href={MAIL_LINK}>
-              <MdMail />
+            <a className="text-2xl text-white p-2 hover:text-yellow-400 transition-all" target="_blank" href={PHONE_LINK}>
+              <FaPhone />
             </a>
           </div>
           <div className="self-end hidden md:block">
