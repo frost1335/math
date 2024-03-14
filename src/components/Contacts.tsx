@@ -31,7 +31,7 @@ export default function Contacts() {
                     </a>
                 </li>
                 <li>
-                    <a target="_blank" href={PHONE_LINK} className="flex flex-col items-center text-slate-600 hover:text-red-600 transition-all">
+                    <a href={PHONE_LINK} className="flex flex-col items-center text-slate-600 hover:text-red-600 transition-all">
                         <span className="mb-4 text-2xl md:text-4xl w-16 h-16 md:w-20 md:h-20 flex items-center justify-center rounded-full border-2 border-zinc-700 text-zinc-700 shadow-lg hover:text-white hover:bg-red-600 hover:border-red-600 hover:shadow-xl transition-all">
                             <FaPhone />
                         </span>
