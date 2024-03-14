@@ -220,7 +220,7 @@ Foydalanuvchi Tel. raqami:  <u>${phone}</u>
 
       <main className="py-16 md:py-24 px-4 md:px-6">
       <div className="flex flex-col items-center">
-          <h2 className="text-zinc-700 text-center font-semibold text-2xl md:text-3xl mb-10">Kitob xaqida batafsil ma'lumot olish uchun Ism va Telefon raqamingiz qoldiring!</h2>
+          <h2 className="text-zinc-700 text-center font-semibold text-2xl md:text-3xl mb-10">Kitob xaqida batafsil ma&apos;lumot olish uchun Ism va Telefon raqamingiz qoldiring!</h2>
               <form onSubmit={onSubmit} className="flex flex-col max-w-sm w-full">
                                 <div className="flex flex-col items-start mb-3 md:mb-5">
                                     <label htmlFor="name" className="font-sans text-lg text-slate-600 mb-2">Ism & Familiya <span className="text-red-600">*</span></label>
