@@ -9,8 +9,53 @@ import { BsTelegram } from "react-icons/bs";
 import { RiInstagramFill } from "react-icons/ri";
 import { INSTAGRAM_LINK, PHONE_LINK, TELEGRAM_LINK } from "@/constants";
 import { MdMail } from "react-icons/md";
+import { useRouter } from "next/navigation";
+import { sendMessage } from "@/app/actions";
+import ReactInputMask from "react-input-mask"
+
+const phoneStringLength = 18
 
 export default function Home() {
+  const router = useRouter()
+  const [name, setName] = useState<string | null>('')
+  const [phone, setPhone] = useState<string | null>('+998')
+  const [error, setError] = useState('')
+  
+  const formValidation = () => {
+        return name && (phone?.length === phoneStringLength)
+    }
+
+  const onSubmit = async (e) => {
+        e.preventDefault()
+
+        if (formValidation()) {
+            try {
+                const chatId = process.env.NEXT_PUBLIC_CHAT_ID
+
+                // message to inform user test results
+                const message = `
+<b>Batafsil Ma'lumotlar uchun Foydalanuvchidan Ariza!</b>
+
+Foydalanuvchi Ismi:  <u>${name}</u>
+Foydalanuvchi Tel. raqami:  <u>${phone}</u>
+                `
+                // Send the message to the Telegram bot
+                await sendMessage(chatId, message);
+            }
+            catch (err) {
+                console.log(err);
+            }
+
+            router.push('/thanks')
+        }
+        else {
+            setError('Iltimos Ism familyangizni yoki Tel. raqamingizni to`g`ri kiriting!')
+            setTimeout(() => {
+                setError('')
+            }, 5000)
+        }
+    }
+  
   return (
     <div id="home">
       <header className="relative w-full min-h-screen bg-red-600 flex flex-col items-center justify-center">
@@ -171,6 +216,36 @@ export default function Home() {
           </div>
         </div>
       </main>
+
+      <main className="py-16 md:py-24 px-4 md:px-6">
+      <div className="flex flex-col items-center">
+          <h2 className="text-zinc-700 text-center font-semibold text-2xl md:text-3xl mb-10">Kitob xaqida batafsil ma'lumot olish uchun Ism va Telefon raqamingiz qoldiring!</h2>
+              <form onSubmit={onSubmit} className="flex flex-col max-w-sm w-full">
+                                <div className="flex flex-col items-start mb-3 md:mb-5">
+                                    <label htmlFor="name" className="font-sans text-lg text-slate-600 mb-2">Ism & Familiya <span className="text-red-600">*</span></label>
+                                    <input value={name || ''} onChange={(e) => setName(e.target.value)} className="w-full px-4 py-3 border-2 border-slate-300 rounded-md font-medium text-zinc-700 placeholder:text-slate-500 font-sans" type="text" id="name" placeholder="Ism & Familiya" />
+                                </div>
+                                <div className="flex flex-col items-start mb-3 md:mb-5">
+                                    <label htmlFor="phone" className="font-sans text-lg text-slate-600 mb-2">Tel. raqam <span className="text-red-600">*</span></label>
+                                    <ReactInputMask
+                                        className="w-full px-4 py-3 border-2 border-slate-300 rounded-md font-medium text-zinc-700 placeholder:text-slate-500 font-sans"
+                                        mask={`+999(99)-999-99-99`}
+                                        value={`${phone}`}
+                                        id="phone"
+                                        maskChar={null}
+                                        onChange={(e) => setPhone(e?.target?.value || '')}
+                                        placeholder="Tel. raqam"
+                                        required
+                                    />
+                                </div>
+                                <div className="flex flex-col items-center justify-center mt-8">
+                                    <Button disabled={!formValidation()} type="submit" status="secondary">
+                                        Jo`natish
+                                    </Button>
+                                    <p className="font-medium text-center text-orange-500 mt-3">{error}</p>
+                                </div>
+                            </form>
+          </div>
     </div>
   );
 }
