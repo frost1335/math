@@ -263,7 +263,7 @@ Foydalanuvchi Tel. raqami:  <u>${phone}</u>
         )}
         </main>
 
-      <main id="contacts">
+      <main id="contacts" className="py-16 md:py-24 px-4 bg-red-600 md:px-6">
                 <Contacts />
             </main>
     </div>
