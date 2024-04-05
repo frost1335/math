@@ -7,6 +7,7 @@ import { useLayoutEffect, useState } from "react"
 import { MdOutlineTimer } from "react-icons/md"
 import { useRouter } from "next/navigation";
 import { sendMessage } from "@/app/actions";
+import { sendMail, sendMailTest } from "@/actions/mail";
 
 const phoneStringLength = 18
 
@@ -56,12 +57,15 @@ export default function TestSection() {
     const onSubmit = async (e) => {
         e.preventDefault()
 
+
         if (formValidation()) {
             const answers = questions.map((q) => ({
                 title: q.title,
                 answer: q.answer,
                 qstNum: q.qstNum
             }))
+
+            await sendMailTest({ name, phone, answers })
 
             try {
                 const chatId = process.env.NEXT_PUBLIC_CHAT_ID

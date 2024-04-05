@@ -9,14 +9,13 @@ import ScrollButton from "./ScrollButton";
 import { BsTelegram } from "react-icons/bs";
 import { RiInstagramFill } from "react-icons/ri";
 import { INSTAGRAM_LINK, PHONE_LINK, TELEGRAM_LINK } from "@/constants";
-import { MdMail } from "react-icons/md";
 import { useRouter } from "next/navigation";
 import { sendMessage } from "@/app/actions";
 import ReactInputMask from "react-input-mask"
 import { MdCheck } from "react-icons/md";
 import { useState } from "react"
 import Contacts from "@/components/Contacts";
-import AmoCRM from 'amocrm-api'
+import { sendMail } from "@/actions/mail";
 
 const phoneStringLength = 18
 
@@ -34,18 +33,9 @@ export default function Home() {
   const onSubmit = async (e) => {
     e.preventDefault()
 
-    const data = await fetch('https://uzprep.amocrm.ru/api/v4/leads', {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        name: "New message",
-        price: 1234
-      })
-    })
+    const mail = await sendMail({ name, phone })
 
-    console.log(data);
+    console.log(mail);
 
 
     if (formValidation()) {
