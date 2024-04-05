@@ -16,6 +16,7 @@ import ReactInputMask from "react-input-mask"
 import { MdCheck } from "react-icons/md";
 import { useState } from "react"
 import Contacts from "@/components/Contacts";
+import AmoCRM from 'amocrm-api'
 
 const phoneStringLength = 18
 
@@ -25,42 +26,56 @@ export default function Home() {
   const [done, setDone] = useState<boolean | null>(false)
   const [phone, setPhone] = useState<string | null>('+998')
   const [error, setError] = useState('')
-  
+
   const formValidation = () => {
-        return name && (phone?.length === phoneStringLength)
-    }
+    return name && (phone?.length === phoneStringLength)
+  }
 
   const onSubmit = async (e) => {
-        e.preventDefault()
+    e.preventDefault()
 
-        if (formValidation()) {
-            try {
-                const chatId = process.env.NEXT_PUBLIC_CHAT_ID
+    const data = await fetch('https://uzprep.amocrm.ru/api/v4/leads', {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        name: "New message",
+        price: 1234
+      })
+    })
 
-                // message to inform user test results
-                const message = `
+    console.log(data);
+
+
+    if (formValidation()) {
+      try {
+        const chatId = process.env.NEXT_PUBLIC_CHAT_ID
+
+        // message to inform user test results
+        const message = `
 <b>Batafsil Ma'lumotlar uchun Foydalanuvchidan Ariza!</b>
 
 Foydalanuvchi Ismi:  <u>${name}</u>
 Foydalanuvchi Tel. raqami:  <u>${phone}</u>
                 `
-                // Send the message to the Telegram bot
-                await sendMessage(chatId, message);
-            }
-            catch (err) {
-                console.log(err);
-            }
+        // Send the message to the Telegram bot
+        await sendMessage(chatId, message);
+      }
+      catch (err) {
+        console.log(err);
+      }
 
-            setDone(true)
-        }
-        else {
-            setError('Iltimos Ism familyangizni yoki Tel. raqamingizni to`g`ri kiriting!')
-            setTimeout(() => {
-                setError('')
-            }, 5000)
-        }
+      setDone(true)
     }
-  
+    else {
+      setError('Iltimos Ism familyangizni yoki Tel. raqamingizni to`g`ri kiriting!')
+      setTimeout(() => {
+        setError('')
+      }, 5000)
+    }
+  }
+
   return (
     <div id="home">
       <header className="relative w-full min-h-screen bg-red-600 flex flex-col items-center justify-center">
@@ -223,49 +238,49 @@ Foydalanuvchi Tel. raqami:  <u>${phone}</u>
       </main>
 
       <main className="py-16 md:py-24 px-4 bg-red-600 md:px-6">
-      
+
         {done ? (
-      <div className="container max-w-7xl m-auto flex flex-col items-center py-16 md:py-24">
-                    <span className="mb-10 text-5xl text-white p-8 bg-emerald-500 rounded-full flex items-center justify-center shadow-2xl shadow-emerald-400/60">
-                        <MdCheck />
-                    </span>
-                    <h2 className="max-w-lg text-center text-2xl text-white">Rahmat, tez orada menjerlarimiz aloqaga chiqib batafsil ma’lumot berishadi.</h2>
-                </div>
+          <div className="container max-w-7xl m-auto flex flex-col items-center py-16 md:py-24">
+            <span className="mb-10 text-5xl text-white p-8 bg-emerald-500 rounded-full flex items-center justify-center shadow-2xl shadow-emerald-400/60">
+              <MdCheck />
+            </span>
+            <h2 className="max-w-lg text-center text-2xl text-white">Rahmat, tez orada menjerlarimiz aloqaga chiqib batafsil ma’lumot berishadi.</h2>
+          </div>
         ) : (
-      <div className="flex flex-col items-center">
-          <h2 className="text-white text-center font-semibold text-2xl md:text-3xl mb-16">Kitob xaqida batafsil ma&apos;lumot olish uchun Ism va Telefon raqamingizni qoldiring!</h2>
-          <form onSubmit={onSubmit} className="flex flex-col max-w-3xl w-full sm:px-28 px-10 p-10 bg-white rounded-xl">
-                                <div className="flex flex-col items-start mb-3 md:mb-5">
-                                    <label htmlFor="name" className="font-sans text-lg text-slate-600 mb-2">Ism & Familiya <span className="text-red-600">*</span></label>
-                                    <input value={name || ''} onChange={(e) => setName(e.target.value)} className="w-full px-4 py-3 border-2 border-slate-300 rounded-md font-medium text-zinc-700 placeholder:text-slate-500 font-sans" type="text" id="name" placeholder="Ism & Familiya" />
-                                </div>
-                                <div className="flex flex-col items-start mb-3 md:mb-5">
-                                    <label htmlFor="phone" className="font-sans text-lg text-slate-600 mb-2">Tel. raqam <span className="text-red-600">*</span></label>
-                                    <ReactInputMask
-                                        className="w-full px-4 py-3 border-2 border-slate-300 rounded-md font-medium text-zinc-700 placeholder:text-slate-500 font-sans"
-                                        mask={`+999(99)-999-99-99`}
-                                        value={`${phone}`}
-                                        id="phone"
-                                        maskChar={null}
-                                        onChange={(e) => setPhone(e?.target?.value || '')}
-                                        placeholder="Tel. raqam"
-                                        required
-                                    />
-                                </div>
-                                <div className="flex flex-col items-center justify-center mt-8">
-                                    <Button disabled={!formValidation()} type="submit">
-                                        Jo`natish
-                                    </Button>
-                                    <p className="font-medium text-center text-orange-500 mt-3">{error}</p>
-                                </div>
-                    </form>
-        </div>
+          <div className="flex flex-col items-center">
+            <h2 className="text-white text-center font-semibold text-2xl md:text-3xl mb-16">Kitob xaqida batafsil ma&apos;lumot olish uchun Ism va Telefon raqamingizni qoldiring!</h2>
+            <form onSubmit={onSubmit} className="flex flex-col max-w-3xl w-full sm:px-28 px-10 p-10 bg-white rounded-xl">
+              <div className="flex flex-col items-start mb-3 md:mb-5">
+                <label htmlFor="name" className="font-sans text-lg text-slate-600 mb-2">Ism & Familiya <span className="text-red-600">*</span></label>
+                <input value={name || ''} onChange={(e) => setName(e.target.value)} className="w-full px-4 py-3 border-2 border-slate-300 rounded-md font-medium text-zinc-700 placeholder:text-slate-500 font-sans" type="text" id="name" placeholder="Ism & Familiya" />
+              </div>
+              <div className="flex flex-col items-start mb-3 md:mb-5">
+                <label htmlFor="phone" className="font-sans text-lg text-slate-600 mb-2">Tel. raqam <span className="text-red-600">*</span></label>
+                <ReactInputMask
+                  className="w-full px-4 py-3 border-2 border-slate-300 rounded-md font-medium text-zinc-700 placeholder:text-slate-500 font-sans"
+                  mask={`+999(99)-999-99-99`}
+                  value={`${phone}`}
+                  id="phone"
+                  maskChar={null}
+                  onChange={(e) => setPhone(e?.target?.value || '')}
+                  placeholder="Tel. raqam"
+                  required
+                />
+              </div>
+              <div className="flex flex-col items-center justify-center mt-8">
+                <Button disabled={!formValidation()} type="submit">
+                  Jo`natish
+                </Button>
+                <p className="font-medium text-center text-orange-500 mt-3">{error}</p>
+              </div>
+            </form>
+          </div>
         )}
-        </main>
+      </main>
 
       <main id="contacts" className="py-16 md:py-24 px-4 md:px-6">
-                <Contacts />
-            </main>
+        <Contacts />
+      </main>
     </div>
   );
 }
